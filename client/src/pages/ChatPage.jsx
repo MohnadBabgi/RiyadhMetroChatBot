@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Train, Globe } from 'lucide-react';
+import { Send, Train, Globe, Github, Linkedin } from 'lucide-react';
 import { useLanguageStore, useTranslation } from '../stores/languageStore';
 import { chatApi } from '../services/api';
 import ChatMessage from '../components/ChatMessage';
@@ -195,6 +195,45 @@ function ChatPage() {
           </div>
         </div>
       </main>
+
+      {/* Footer */}
+      <footer className="py-4 glass border-t border-slate-700/50">
+        <div className="flex flex-col items-center justify-center gap-2">
+          <div className="flex items-center gap-6 mb-2">
+            <a 
+              href="https://github.com/MohnadBabgi/RiyadhMetroChatBot" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2 text-slate-500 hover:text-white transition-all duration-300"
+              title="GitHub"
+            >
+              <Github className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            </a>
+            <a href=""></a>
+            <a 
+              href="https://www.linkedin.com/in/mohanadbabgi/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2 text-slate-500 hover:text-[#0077b5] transition-all duration-300"
+              title="LinkedIn"
+            >
+              <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            </a>
+          </div>
+          
+          <div className="flex flex-col items-center gap-1 text-xs text-slate-500">
+            <p>
+              {language === 'ar' 
+                ? '© 2026 مساعد مترو الرياض' 
+                : '© 2026 Riyadh Metro Assistant'}
+            </p>
+            <p className="flex items-center gap-1">
+              {language === 'ar' ? 'تم التطوير بواسطة' : 'Developed by'}
+              <span className="text-sky-400 font-medium">Mohanad Babgi</span>
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
