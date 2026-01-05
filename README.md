@@ -1,6 +1,6 @@
 # 🚇 Riyadh Metro FAQ Assistant
 
-A production-ready web application that helps users ask questions about Riyadh Metro and receive accurate answers using semantic search with AI embeddings.
+ web application that helps users ask questions about Riyadh Metro and receive accurate answers using semantic search with AI embeddings.
 
 ![Riyadh Metro FAQ Assistant](https://img.shields.io/badge/Riyadh_Metro-FAQ_Assistant-blue?style=for-the-badge)
 ![Node.js](https://img.shields.io/badge/Node.js-18+-green?style=flat-square)
