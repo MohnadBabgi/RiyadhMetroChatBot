@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg-primary: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-bg-tertiary: #334155;
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #94a3b8;
+  --color-accent: #0ea5e9;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'IBM Plex Sans Arabic', 'Inter', sans-serif;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* RTL Support */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="ltr"] {
+  text-align: left;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-bg-tertiary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Custom utility classes */
+@layer components {
+  .glass {
+    @apply bg-slate-800/50 backdrop-blur-xl border border-slate-700/50;
+  }
+  
+  .glass-light {
+    @apply bg-white/5 backdrop-blur-md border border-white/10;
+  }
+  
+  .gradient-primary {
+    @apply bg-gradient-to-r from-sky-500 to-blue-600;
+  }
+  
+  .gradient-secondary {
+    @apply bg-gradient-to-r from-purple-500 to-pink-500;
+  }
+  
+  .gradient-metro {
+    @apply bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-700;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-blue-500;
+  }
+  
+  .btn-primary {
+    @apply px-6 py-3 gradient-primary text-white font-semibold rounded-xl 
+           shadow-lg shadow-sky-500/25 hover:shadow-xl hover:shadow-sky-500/30 
+           hover:scale-105 active:scale-95 transition-all duration-200;
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-medium 
+           rounded-xl transition-all duration-200;
+  }
+  
+  .btn-ghost {
+    @apply px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-700/50 
+           rounded-lg transition-all duration-200;
+  }
+  
+  .card {
+    @apply bg-slate-800/80 backdrop-blur-sm border border-slate-700/50 
+           rounded-2xl shadow-xl;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 bg-slate-700/50 border border-slate-600 
+           rounded-xl text-white placeholder-slate-400 
+           focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 
+           transition-all duration-200;
+  }
+  
+  .chat-bubble {
+    @apply px-5 py-4 rounded-2xl max-w-[85%] animate-fade-in;
+  }
+  
+  .chat-bubble-user {
+    @apply chat-bubble bg-gradient-to-r from-sky-500 to-blue-600 text-white 
+           rounded-br-md ml-auto;
+  }
+  
+  .chat-bubble-bot {
+    @apply chat-bubble bg-slate-700/80 text-slate-100 rounded-bl-md mr-auto;
+  }
+}
+
+/* Animation for typing indicator */
+@keyframes typing {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-4px); }
+}
+
+.typing-dot {
+  animation: typing 1.4s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* Metro line colors */
+.line-blue { @apply bg-metro-blue; }
+.line-red { @apply bg-metro-red; }
+.line-orange { @apply bg-metro-orange; }
+.line-yellow { @apply bg-metro-yellow; }
+.line-green { @apply bg-metro-green; }
+.line-purple { @apply bg-metro-purple; }

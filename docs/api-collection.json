@@ -1,0 +1,309 @@
+{
+  "info": {
+    "name": "Riyadh Metro FAQ API",
+    "description": "API documentation for the Riyadh Metro FAQ Assistant",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/health",
+        "description": "Check if the API is running"
+      }
+    },
+    {
+      "name": "Chat",
+      "item": [
+        {
+          "name": "Send Message",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/chat",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"كم سعر التذكرة؟\",\n  \"sessionId\": \"optional-session-id\"\n}"
+            },
+            "description": "Send a question and receive an answer with confidence score"
+          }
+        },
+        {
+          "name": "Send Feedback",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/chat/feedback",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"logId\": 1,\n  \"feedback\": \"positive\",\n  \"reason\": \"Helpful answer\"\n}"
+            },
+            "description": "Submit feedback for an answer (positive/negative)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "FAQs (Public)",
+      "item": [
+        {
+          "name": "Get All FAQs",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/faqs?category=tickets&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "faqs"],
+              "query": [
+                {"key": "category", "value": "tickets", "description": "Filter by category"},
+                {"key": "language", "value": "ar", "description": "Filter by language"},
+                {"key": "featured", "value": "true", "description": "Filter featured only"},
+                {"key": "search", "value": "", "description": "Search in Q&A"},
+                {"key": "limit", "value": "10", "description": "Limit results"},
+                {"key": "offset", "value": "0", "description": "Pagination offset"}
+              ]
+            },
+            "description": "Get all FAQs with optional filters"
+          }
+        },
+        {
+          "name": "Get Categories",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/faqs/categories",
+            "description": "Get all FAQ categories"
+          }
+        },
+        {
+          "name": "Get Featured FAQs",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/faqs/featured",
+            "description": "Get featured FAQs"
+          }
+        },
+        {
+          "name": "Get Single FAQ",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/faqs/1",
+            "description": "Get a single FAQ by ID"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/admin/login",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+            },
+            "description": "Login and receive JWT token"
+          }
+        },
+        {
+          "name": "Verify Token",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/admin/verify",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "description": "Verify JWT token is valid"
+          }
+        },
+        {
+          "name": "Get FAQs (Admin)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/admin/faqs",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "description": "Get all FAQs with admin details"
+          }
+        },
+        {
+          "name": "Create FAQ",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/admin/faqs",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question\": \"سؤال جديد بالعربية\",\n  \"questionEn\": \"New question in English\",\n  \"answer\": \"إجابة السؤال\",\n  \"answerEn\": \"Answer in English\",\n  \"category\": \"general\",\n  \"tags\": [\"new\", \"example\"],\n  \"featured\": false\n}"
+            },
+            "description": "Create a new FAQ"
+          }
+        },
+        {
+          "name": "Update FAQ",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/admin/faqs/1",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question\": \"سؤال محدث\",\n  \"featured\": true\n}"
+            },
+            "description": "Update an existing FAQ"
+          }
+        },
+        {
+          "name": "Delete FAQ",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/admin/faqs/1",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "description": "Delete a FAQ"
+          }
+        },
+        {
+          "name": "Regenerate Embeddings",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/admin/faqs/regenerate-embeddings",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "description": "Regenerate embeddings for all FAQs"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "item": [
+        {
+          "name": "Get Dashboard",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/analytics/dashboard?days=30",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "analytics", "dashboard"],
+              "query": [
+                {"key": "days", "value": "30", "description": "Number of days to analyze"}
+              ]
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "description": "Get analytics dashboard data"
+          }
+        },
+        {
+          "name": "Get Query Logs",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/analytics/logs?limit=100",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "analytics", "logs"],
+              "query": [
+                {"key": "limit", "value": "100", "description": "Number of logs to return"}
+              ]
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "description": "Get recent query logs"
+          }
+        },
+        {
+          "name": "Export CSV",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/analytics/export?days=30",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "analytics", "export"],
+              "query": [
+                {"key": "days", "value": "30", "description": "Days of data to export"}
+              ]
+            },
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "description": "Export query logs as CSV"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ]
+}

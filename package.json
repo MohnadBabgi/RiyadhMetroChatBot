@@ -1,0 +1,46 @@
+{
+  "name": "riyadh-metro-faq-assistant",
+  "version": "1.0.0",
+  "description": "Production-ready FAQ Assistant for Riyadh Metro with semantic search",
+  "main": "server/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "server:dev": "nodemon server/index.js",
+    "client:dev": "cd client && npm run dev",
+    "build": "cd client && npm run build",
+    "start": "node server/index.js",
+    "seed": "node server/scripts/seedDatabase.js",
+    "test": "vitest",
+    "test:run": "vitest run"
+  },
+  "keywords": [
+    "riyadh",
+    "metro",
+    "faq",
+    "chatbot",
+    "semantic-search"
+  ],
+  "author": "Riyadh Metro Team",
+  "license": "MIT",
+  "dependencies": {
+    "@xenova/transformers": "^2.17.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "csv-parse": "^5.5.3",
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "sharp": "^0.34.5",
+    "sql.js": "^1.13.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.3",
+    "vitest": "^1.2.2"
+  }
+}
