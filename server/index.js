@@ -27,9 +27,24 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Enable trust proxy for rate limiting behind load balancers/proxies
+app.set('trust proxy', 1);
+
 // Security middleware
 app.use(helmet({
-  contentSecurityPolicy: false,
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "blob:"],
+      connectSrc: ["'self'"],
+      fontSrc: ["'self'", "data:"],
+      objectSrc: ["'none'"],
+      mediaSrc: ["'self'"],
+      frameSrc: ["'none'"],
+    },
+  },
   crossOriginEmbedderPolicy: false
 }));
 
@@ -173,8 +188,14 @@ async function startServer() {
 
     // Serve static files in production
     if (process.env.NODE_ENV === 'production') {
+      // Security check for JWT Secret
+      const jwtSecret = process.env.JWT_SECRET;
+      if (!jwtSecret || jwtSecret === 'default-secret' || jwtSecret === 'riyadh-metro-secret-change-me') {
+        console.warn('⚠️  SECURITY WARNING: Using default JWT_SECRET in production. Please set a secure value.');
+      }
+
       const clientDistPath = path.join(__dirname, '../client/dist');
-      console.log(`📂 Serving static files from: ${clientDistPath}`);
+      console.log('📂 Serving static files');
 
       app.use(express.static(clientDistPath));
 
@@ -189,11 +210,13 @@ async function startServer() {
     }
 
     app.listen(PORT, () => {
-      console.log(`✅ Server running on http://localhost:${PORT}`);
-      console.log(`📖 API Documentation: http://localhost:${PORT}/api/health`);
+      console.log(`✅ Server running on port ${PORT}`);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(`📖 API Documentation: http://localhost:${PORT}/api/health`);
+      }
     });
   } catch (error) {
-    console.error('❌ Failed to start server:', error);
+    console.error('❌ Failed to start server');
     process.exit(1);
   }
 }

@@ -6,12 +6,13 @@ import { chatApi } from '../services/api';
 import ChatMessage from '../components/ChatMessage';
 import QuickButtons from '../components/QuickButtons';
 import TypingIndicator from '../components/TypingIndicator';
+import { uuid } from '../utils/uuid';
 
 function ChatPage() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [sessionId] = useState(() => crypto.randomUUID());
+  const [sessionId] = useState(() => uuid());
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   

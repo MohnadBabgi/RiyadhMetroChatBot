@@ -8,15 +8,16 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=${NODE_ENV:-production}
       - PORT=3001
-      - JWT_SECRET=${JWT_SECRET:-riyadh-metro-secret-change-me}
-      - JWT_EXPIRES_IN=7d
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN:-7d}
       - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin123}
-      - EMBEDDING_MODEL=Xenova/paraphrase-multilingual-MiniLM-L12-v2
-      - SIMILARITY_THRESHOLD=0.55
-      - TOP_K_RESULTS=5
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL:-Xenova/paraphrase-multilingual-MiniLM-L12-v2}
+      - SIMILARITY_THRESHOLD=${SIMILARITY_THRESHOLD:-0.55}
+      - TOP_K_RESULTS=${TOP_K_RESULTS:-5}
+      - CORS_ORIGIN=${CORS_ORIGIN}
     volumes:
       - app-data:/app/data
     restart: unless-stopped
