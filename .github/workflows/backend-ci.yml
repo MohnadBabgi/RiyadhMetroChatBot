@@ -21,4 +21,4 @@ jobs:
 
       - name: Build backend Docker image
         run: |
-          docker build -t riyadh-faq-backend:ci ./server
+          docker build -t riyadh-faq-backend:ci .
