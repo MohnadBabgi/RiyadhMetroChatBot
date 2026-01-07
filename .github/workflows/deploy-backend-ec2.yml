@@ -1,0 +1,44 @@
+name: Deploy Backend to EC2 (Pull from ECR)
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "server/**"
+      - "Dockerfile"
+      - ".github/workflows/deploy-backend-ec2.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            set -e
+            cd "${{ secrets.EC2_APP_DIR }}"
+
+            echo "Login to ECR..."
+            aws ecr get-login-password --region "${{ secrets.AWS_REGION }}" \
+              | docker login --username AWS --password-stdin "${{ secrets.ECR_REGISTRY }}"
+
+            echo "Pull latest image..."
+            docker compose pull
+
+            echo "Restart container..."
+            docker compose up -d
+
+            echo "Wait a bit for healthcheck..."
+            sleep 10
+
+            echo "Container status:"
+            docker ps
+
+            echo "Health status:"
+            docker inspect --format='{{json .State.Health}}' riyadhmetrochatbot-app-1 || true
