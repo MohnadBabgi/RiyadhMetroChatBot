@@ -232,6 +232,7 @@ function ChatPage() {
               {language === 'ar' ? 'تم التطوير بواسطة' : 'Developed by'}
               <span className="text-sky-400 font-medium">Mohanad Babgi</span>
             </p>
+            <p className="text-sky-400 font-medium">V2.0</p>
           </div>
         </div>
       </footer>
